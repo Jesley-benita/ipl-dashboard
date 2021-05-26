@@ -1,0 +1,90 @@
+---
+title: "Criket scores"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: row
+    vertical_layout: fill
+    social: [ "twitter", "facebook", "menu"]
+    source_code: embed
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(ggplot2)
+library(RColorBrewer)
+library(ggmap)
+library(maps)
+library(rgdal)
+library(scales)
+library(maptools)
+library(gridExtra)
+library(rgeos)
+library(mapproj)
+library(dplyr)
+library(knitr)
+library(DT)
+library(rpivotTable)
+
+library(plotly)
+library(dplyr)
+library(openintro)
+library(highcharter)
+library(ggvis)
+
+```
+```{r}
+ci <- read.csv("cricket.csv")
+ci$matches<-as.numeric(ci$matches)
+ci$matches.played<-as.numeric(ci$matches.played)
+mt<-sum(ci[,9])
+st<-sum(ci[,18])
+mp<-sum(ci[,27])
+
+
+
+```
+
+row 
+-----------------------------------------------------------------------
+
+### matches vs countries
+
+```{r}
+valueBox(mt)
+
+ggplot(data = ci, aes(x =Team , y = matches)) +
+  geom_bar(stat = "identity", fill = "blue")+coord_flip()+
+     labs(x = "countries",
+       y = " matches",
+       title = "No of Matches")
+```
+
+row 
+-----------------------------------------------------------------------
+
+### Strikr rate vs countries
+
+```{r}
+valueBox(st)
+
+ggplot(data = ci, aes(x =Team , y = Strike.rate)) +
+  geom_bar(stat = "identity", fill = "orange")+coord_flip()+
+     labs(x = "Countries",
+       y ="Strike rate",
+       title = "Strike Rate per  countries")
+
+```
+
+### matches played vs countries
+
+```{r}
+valueBox(mt)
+
+ggplot(data = ci, aes(x =Team , y = matches.played)) +
+  geom_bar(stat = "identity", fill = "plum")+coord_flip()+
+     labs(x = "Countries",
+       y = " matches played",
+       title = "No of Matches")
+```
+
+
